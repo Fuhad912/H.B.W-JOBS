@@ -44,7 +44,7 @@
             align-items: center;
             z-index: 1000;
             box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            transition: padding 0.3s ease; /* FIX: Added transition for smooth padding change */
+            transition: padding 0.12s ease; /* FIX: Added transition for smooth padding change */
         }
 
         .logo {
@@ -69,7 +69,7 @@
             text-decoration: none;
             font-weight: 500;
             position: relative;
-            transition: color 0.3s;
+            transition: color 0.12s;
         }
 
         .nav-links a::after {
@@ -80,7 +80,7 @@
             width: 0;
             height: 2px;
             background: #6C63FF;
-            transition: width 0.3s ease;
+            transition: width 0.12s ease;
         }
 
         .nav-links a:hover {
@@ -97,7 +97,10 @@
             flex-direction: column;
             gap: 5px;
             cursor: pointer;
-            z-index: 1001;
+            z-index: 1100;
+            position: absolute;
+            right: 20px;
+            top: 18px;
         }
 
         .menu-toggle .bar {
@@ -105,7 +108,7 @@
             height: 3px;
             background: white;
             border-radius: 2px;
-            transition: all 0.3s ease;
+            transition: all 0.12s ease;
         }
         
         /* FIX: Hamburger "X" animation */
@@ -200,7 +203,7 @@
             position: relative;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(108,99,255,0.3);
-            transition: all 0.3s ease;
+            transition: all 0.12s ease;
         }
 
         .cta-button::before {
@@ -211,7 +214,7 @@
             width: 100%;
             height: 100%;
             background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
-            transition: left 0.5s ease;
+            transition: left 0.18s ease;
         }
 
         .cta-button span {
@@ -276,16 +279,12 @@
             padding: 3rem 2rem;
             border-radius: 20px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.08);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.12s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             overflow: hidden;
             cursor: pointer;
             transform-style: preserve-3d;
             perspective: 1000px;
-            
-            /* FIX: Set initial state for animation. JS will animate this TO opacity 1 */
-            opacity: 0;
-            transform: translateY(100px);
         }
 
         .card::before {
@@ -319,7 +318,7 @@
             background: linear-gradient(45deg, rgba(108,99,255,0.1), rgba(255,255,255,0.1), rgba(108,99,255,0.1));
             transform: translate(-50%, -50%);
             opacity: 0;
-            transition: opacity 0.4s ease;
+            transition: opacity 0.12s ease;
         }
         
         .card:hover::after {
@@ -504,7 +503,7 @@
             top: 50%;
             transform: translateY(-50%);
             font-size: 1.5rem;
-            transition: right 0.3s ease;
+            transition: right 0.12s ease;
         }
 
         .apply-btn:hover {
@@ -562,7 +561,7 @@
             object-fit: cover;
             display: block;
             transform-origin: center;
-            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+            transition: transform 0.12s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .team-card:hover .team-image img {
@@ -757,7 +756,7 @@
             
             /* FIX: Show hamburger menu */
             .menu-toggle {
-                display: flex;
+                display: flex !important;
             }
 
             /* FIX: Mobile menu styles */
@@ -772,7 +771,7 @@
                 justify-content: center;
                 align-items: center;
                 gap: 2rem;
-                transition: right 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+                transition: right 0.18s cubic-bezier(0.77, 0, 0.175, 1);
             }
 
             .nav-links.active {
@@ -855,7 +854,11 @@
             <li><a href="#home">About</a></li>
             <li><a href="https://forms.gle/gvvagsghfkF3SzX19">Apply</a></li>
         </ul>
-        <!-- legacy toggle removed; menu button is injected by script for better accessibility -->
+        <div class="menu-toggle" aria-label="Toggle navigation" role="button" tabindex="0">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
     </nav>
 
     <section class="hero" id="home">
@@ -1060,6 +1063,7 @@
             // Register ScrollTrigger plugin
             if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
                 gsap.registerPlugin(ScrollTrigger);
+                try { if (gsap.globalTimeline) gsap.globalTimeline.timeScale(2); } catch(e) { /* ignore */ }
             }
             
             // --- FIX: Mobile Navigation Toggle ---
@@ -1068,11 +1072,20 @@
             const navLinksItems = document.querySelectorAll('.nav-links li');
 
             if (menuToggle && navLinks) {
-                menuToggle.addEventListener('click', () => {
+                const toggleMenu = () => {
                     menuToggle.classList.toggle('active');
                     navLinks.classList.toggle('active');
+                };
+
+                menuToggle.addEventListener('click', toggleMenu);
+                // allow keyboard toggling (Enter / Space)
+                menuToggle.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        toggleMenu();
+                    }
                 });
-                
+
                 // Close menu when a link is clicked (for single-page anchors)
                 navLinksItems.forEach(item => {
                     item.addEventListener('click', () => {
