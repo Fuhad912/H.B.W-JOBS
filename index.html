@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H.B.W Jobs - Find Your Dream Remote Work</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <noscript>
+        <style>
+            .card, .about-text, .stat-box, .job-card, .team-card, .testimonial-card, .trust-point {
+                opacity: 1 !important;
+                transform: none !important;
+            }
+        </style>
+    </noscript>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #ffffff;
+            color: #1C1C1E;
+            overflow-x: hidden; /* This is good, it prevents horizontal scroll */
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: #1C1C1E;
+            padding: 1.2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: padding 0.3s ease; /* FIX: Added transition for smooth padding change */
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: #6C63FF;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #6C63FF;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #6C63FF;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* FIX: Hamburger Menu for Mobile */
+        .menu-toggle {
+            display: none; /* Hidden on desktop */
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .menu-toggle .bar {
+            width: 25px;
+            height: 3px;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        
+        /* FIX: Hamburger "X" animation */
+        .menu-toggle.active .bar:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+        .menu-toggle.active .bar:nth-child(2) {
+            opacity: 0;
+        }
+        .menu-toggle.active .bar:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px; /* This is good, accounts for fixed navbar height */
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            padding: 4rem 5%;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(108,99,255,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            flex: 1;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: #1C1C1E;
+        }
+
+        .hero h1 .highlight {
+            color: #6C63FF;
+            position: relative;
+            display: inline-block;
+            background: linear-gradient(45deg, #6C63FF, #764ba2);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% 200%;
+            animation: gradient 3s ease infinite;
+            text-shadow: 0 0 20px rgba(108,99,255,0.3);
+        }
+
+        .word {
+            display: inline-block;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: #555;
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(108,99,255,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            transition: left 0.5s ease;
+        }
+
+        .cta-button span {
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-button:hover::before {
+            left: 0;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(108,99,255,0.4);
+        }
+
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+            filter: drop-shadow(0 20px 50px rgba(0,0,0,0.2));
+        }
+
+        /* Why Choose Section */
+        .why-choose {
+            padding: 6rem 5%;
+            background: #fff;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1C1C1E;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 4rem;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: #fff;
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            
+            /* FIX: Set initial state for animation. JS will animate this TO opacity 1 */
+            opacity: 0;
+            transform: translateY(100px);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 20px 60px rgba(108,99,255,0.3);
+        }
+        
+        .card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, rgba(108,99,255,0.1), rgba(255,255,255,0.1), rgba(108,99,255,0.1));
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .card:hover::after {
+            opacity: 1;
+            animation: gradientMove 2s linear infinite;
+        }
+        
+        @keyframes gradientMove {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #1C1C1E;
+        }
+
+        .card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* About Section */
+        .about {
+            padding: 6rem 5%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            overflow: hidden; /* FIX: Added overflow hidden to contain animated elements */
+        }
+
+        .about-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+        }
+
+        .about-text {
+            flex: 1;
+            /* FIX: Set initial state for animation */
+            opacity: 0;
+            transform: translateX(-100px);
+        }
+
+        .about-text h2 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            opacity: 0.95;
+        }
+
+        .about-stats {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .stat-box {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            /* FIX: Set initial state for animation */
+            opacity: 0;
+            transform: scale(0.5);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* Featured Jobs */
+        .featured-jobs {
+            padding: 6rem 5%;
+            background: #f8f9fa;
+        }
+
+        .job-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .job-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            animation: cardFloat 3s ease-in-out infinite;
+            
+            /* FIX: Set initial state for animation */
+            opacity: 0;
+            transform: translateY(100px);
+        }
+
+        /* FIX: Stagger the float animation for a nicer effect */
+        .job-card:nth-child(2) {
+            animation-delay: 1s;
+        }
+        .job-card:nth-child(3) {
+            animation-delay: 2s;
+        }
+
+
+        @keyframes cardFloat {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .job-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            animation-play-state: paused; /* FIX: Pause float on hover */
+        }
+
+        .job-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .job-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #1C1C1E;
+        }
+
+        .job-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .apply-btn {
+            display: inline-block;
+            padding: 0.9rem 2rem;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .apply-btn::before {
+            content: '→';
+            position: absolute;
+            right: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            transition: right 0.3s ease;
+        }
+
+        .apply-btn:hover {
+            padding-right: 3rem;
+            box-shadow: 0 10px 30px rgba(245,87,108,0.3);
+        }
+
+        .apply-btn:hover::before {
+            right: 15px;
+        }
+
+        /* Team Section */
+        .team {
+            padding: 6rem 5%;
+            background: #fff;
+        }
+
+        .team-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .team-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            
+            /* FIX: Set initial state for animation */
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+
+        .team-image {
+            width: 100%;
+            height: 280px;
+            overflow: hidden;
+            border-radius: 20px 20px 0 0;
+            display: block;
+            background: #f0f2ff;
+        }
+
+        .team-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transform-origin: center;
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .team-card:hover .team-image img {
+            transform: scale(1.06) rotateZ(-0.5deg);
+        }
+
+        .team-info {
+            padding: 2rem;
+        }
+
+        .team-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: #1C1C1E;
+        }
+
+        .team-role {
+            color: #6C63FF;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .team-info p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 6rem 5%;
+            background: #1C1C1E;
+            color: white;
+        }
+
+        .testimonial-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonial-card {
+            background: rgba(255,255,255,0.05);
+            padding: 2.5rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+            
+            /* FIX: Set initial state for animation */
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.08);
+        }
+
+        .stars {
+            color: #ffd700;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .author-info h4 {
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .author-info p {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* Trust Section */
+        .trust {
+            padding: 4rem 5%;
+            background: #f8f9fa;
+            text-align: center;
+        }
+
+        .trust-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .trust-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .trust h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #1C1C1E;
+        }
+
+        .trust-points {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            text-align: left;
+        }
+
+        .trust-point {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            
+            /* FIX: Set initial state for animation */
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+
+        .trust-point-icon {
+            font-size: 2rem;
+        }
+
+        .trust-point p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1C1C1E;
+            color: white;
+            padding: 3rem 5%;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #6C63FF;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem 5%; /* FIX: Use consistent padding */
+            }
+            
+            /* FIX: Show hamburger menu */
+            .menu-toggle {
+                display: flex;
+            }
+
+            /* FIX: Mobile menu styles */
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%; /* Start off-screen */
+                width: 100%;
+                height: 100vh;
+                background: #1C1C1E;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2rem;
+                transition: right 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links a {
+                font-size: 1.5rem; /* Make links larger for mobile menu */
+            }
+
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 3rem 5%; /* FIX: Use consistent padding */
+            }
+            
+            /* FIX: Added margin-top to hero image on mobile */
+            .hero-image {
+                margin-top: 2.5rem;
+                width: 90%;
+            }
+
+            .hero h1 {
+                font-size: 2.8rem; /* FIX: Slightly larger for more impact */
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .about-content {
+                flex-direction: column;
+                gap: 2.5rem; /* FIX: Reduced gap for mobile */
+            }
+
+            .about-text h2 {
+                font-size: 2.2rem; /* FIX: Reduced font size */
+            }
+
+            .stat-number {
+                font-size: 2.5rem; /* FIX: Reduced font size */
+            }
+
+            .section-title {
+                font-size: 2.2rem; /* FIX: Reduced font size */
+            }
+            
+            .section-subtitle {
+                font-size: 1rem;
+                margin-bottom: 3rem;
+            }
+            
+            /* FIX: Reduced padding on all sections for mobile */
+            .why-choose, .about, .featured-jobs, .team, .testimonials {
+                padding: 4rem 5%;
+            }
+            
+            /* FIX: Force all grids to be single-column on mobile. */
+            /* This prevents horizontal overflow on small screens. */
+            .cards-container,
+            .job-cards,
+            .team-cards,
+            .testimonial-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">H.<span>B.W</span> Jobs</div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#home">Jobs</a></li>
+            <li><a href="#home">About</a></li>
+            <li><a href="https://forms.gle/gvvagsghfkF3SzX19">Apply</a></li>
+        </ul>
+        <!-- legacy toggle removed; menu button is injected by script for better accessibility -->
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Find flexible <span class="highlight">work-from-home</span> opportunities with H.B.W</h1>
+            <p>Trusted openings, simple applications, and stress-free onboarding. Your dream remote job is just a click away.</p>
+            <a href="https://forms.gle/gvvagsghfkF3SzX19" class="cta-button">
+                <span>Apply Now →</span>
+            </a>
+        </div>
+        <div class="hero-image">
+            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Remote Work Team">
+        </div>
+    </section>
+
+    <section class="why-choose">
+        <h2 class="section-title">Why Choose H.B.W Jobs?</h2>
+        <p class="section-subtitle">We make remote work accessible, reliable, and rewarding</p>
+        <div class="cards-container">
+            <div class="card">
+                <div class="card-icon">🏠</div>
+                <h3>Remote-Friendly Roles</h3>
+                <p>Work from anywhere in the world. All our positions are 100% remote with flexible schedules.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">💰</div>
+                <h3>Weekly/Monthly Payment</h3>
+                <p>Choose your payment schedule. Get paid weekly or monthly based on your preference.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">⚡</div>
+                <h3>Fast & Simple Application</h3>
+                <p>Apply in minutes with our streamlined process. No complex forms or lengthy procedures.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="about">
+        <div class="about-content">
+            <div class="about-text">
+                <h2>About H.B.W Jobs</h2>
+                <p>We're revolutionizing the remote work landscape by connecting talented individuals with leading companies worldwide. Our mission is to make work-from-home opportunities accessible to everyone, regardless of location.</p>
+                <p>Since our launch, we've helped thousands of professionals find meaningful remote work that fits their lifestyle. We carefully vet every opportunity to ensure you're applying to legitimate, high-quality positions.</p>
+            </div>
+            <div class="about-stats">
+                <div class="stat-box">
+                    <div class="stat-number">5000+</div>
+                    <div class="stat-label">Jobs Posted</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">3500+</div>
+                    <div class="stat-label">Successful Placements</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">150+</div>
+                    <div class="stat-label">Partner Companies</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Satisfaction Rate</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="featured-jobs">
+        <h2 class="section-title">Featured Opportunities</h2>
+        <p class="section-subtitle">Start your remote career today with these exciting positions</p>
+        <div class="job-cards">
+            <div class="job-card">
+                <span class="job-badge">REMOTE</span>
+                <h3>Customer Support Agent</h3>
+                <p>Help customers solve their problems via chat and email. Full training provided. Perfect for empathetic communicators who love helping people.</p>
+                <a href="https://forms.gle/gvvagsghfkF3SzX19" class="apply-btn">Apply Now</a>
+            </div>
+            <div class="job-card">
+                <span class="job-badge">REMOTE</span>
+                <h3>Data Entry Assistant</h3>
+                <p>Accurate data input and management. No prior experience needed, just attention to detail. Flexible hours with competitive pay rates.</p>
+                <a href="https://forms.gle/gvvagsghfkF3SzX19" class="apply-btn">Apply Now</a>
+            </div>
+            <div class="job-card">
+                <span class="job-badge">REMOTE</span>
+                <h3>Social Media Manager</h3>
+                <p>Create engaging content and manage social media accounts for growing brands. Perfect for creative individuals with a passion for digital marketing.</p>
+                <a href="https://forms.gle/gvvagsghfkF3SzX19" class="apply-btn">Apply Now</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="team">
+        <h2 class="section-title">Meet Our Team</h2>
+        <p class="section-subtitle">The passionate people behind H.B.W Jobs</p>
+        <div class="team-cards">
+            <div class="team-card">
+                <div class="team-image">
+                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Michael Chen - CEO">
+                </div>
+                <div class="team-info">
+                    <h3>Michael Chen</h3>
+                    <p class="team-role">Chief Executive Officer</p>
+                    <p>15+ years in HR tech, passionate about making remote work accessible to everyone worldwide.</p>
+                </div>
+            </div>
+            <div class="team-card">
+                <div class="team-image">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Sarah Johnson - Head of Operations">
+                </div>
+                <div class="team-info">
+                    <h3>Sarah Johnson</h3>
+                    <p class="team-role">Head of Operations</p>
+                    <p>Expert in streamlining hiring processes and ensuring quality matches between candidates and companies.</p>
+                </div>
+            </div>
+            <div class="team-card">
+                <div class="team-image">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="David Rodriguez - Lead Product Designer">
+                </div>
+                <div class="team-info">
+                    <h3>David Rodriguez</h3>
+                    <p class="team-role">Lead Product Designer</p>
+                    <p>Creating intuitive experiences that make job hunting simple and stress-free for all users.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials">
+        <h2 class="section-title">What Our Users Say</h2>
+        <p class="section-subtitle">Real stories from real people who found their dream jobs</p>
+        <div class="testimonial-cards">
+            <div class="testimonial-card">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <p class="testimonial-text">"H.B.W Jobs completely changed my life! I found an amazing remote position within two weeks of applying. The process was smooth and professional."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">👩</div>
+                    <div class="author-info">
+                        <h4>Emily Parker</h4>
+                        <p>Customer Support Agent</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <p class="testimonial-text">"As a parent, finding flexible work was crucial. H.B.W Jobs helped me land a position that lets me work around my kids' schedule. Highly recommended!"</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">👨</div>
+                    <div class="author-info">
+                        <h4>James Wilson</h4>
+                        <p>Data Entry Specialist</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <p class="testimonial-text">"The transparency and support from H.B.W Jobs is unmatched. They guided me through every step and I now have a fulfilling remote career!"</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">👩</div>
+                    <div class="author-info">
+                        <h4>Maria Garcia</h4>
+                        <p>Social Media Manager</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="trust">
+        <div class="trust-content">
+            <div class="trust-icon">🔒</div>
+            <h2>Your Trust & Safety Matters</h2>
+            <div class="trust-points">
+                <div class="trust-point">
+                    <div class="trust-point-icon">✅</div>
+                    <p><strong>H.B.W Jobs never asks applicants for any payment.</strong> If anyone requests money from you claiming to be from H.B.W Jobs, it's a scam.</p>
+                </div>
+                <div class="trust-point">
+                    <div class="trust-point-icon">🔐</div>
+                    <p><strong>Your information is handled securely.</strong> We use industry-standard encryption to protect all your personal data.</p>
+                </div>
+                <div class="trust-point">
+                    <div class="trust-point-icon">🛡️</div>
+                    <p><strong>All job postings are verified.</strong> We carefully screen every company and position before listing them on our platform.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 H.B.W Jobs. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Contact Us</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Register ScrollTrigger plugin
+            if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                gsap.registerPlugin(ScrollTrigger);
+            }
+            
+            // --- FIX: Mobile Navigation Toggle ---
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            const navLinksItems = document.querySelectorAll('.nav-links li');
+
+            if (menuToggle && navLinks) {
+                menuToggle.addEventListener('click', () => {
+                    menuToggle.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                });
+                
+                // Close menu when a link is clicked (for single-page anchors)
+                navLinksItems.forEach(item => {
+                    item.addEventListener('click', () => {
+                        menuToggle.classList.remove('active');
+                        navLinks.classList.remove('active');
+                    });
+                });
+            }
+            // --- End of Mobile Nav Fix ---
+
+
+            // Navbar animation on scroll
+            let lastScroll = 0;
+            window.addEventListener('scroll', () => {
+                const navbar = document.querySelector('.navbar');
+                const currentScroll = window.pageYOffset;
+                
+                if (currentScroll > 100) {
+                    navbar.style.padding = '0.8rem 5%';
+                } else {
+                    navbar.style.padding = '1.2rem 5%';
+                }
+                
+                lastScroll = currentScroll;
+            });
+
+            // Hero section animations (Your original code was good!)
+            const heroTl = gsap.timeline({defaults: {ease: "power4.out"}});
+            
+            // Split text animation for the heading
+            const heading = document.querySelector('.hero-content h1');
+            if (heading) {
+                const words = heading.textContent.split(' ');
+                heading.innerHTML = words.map(word => `<span class="word">${word} </span>`).join('');
+                
+                heroTl.from('.navbar', {
+                    duration: 1,
+                    y: -100,
+                    opacity: 0
+                })
+                .from('.word', {
+                    duration: 0.8,
+                    opacity: 0,
+                    y: 100,
+                    rotateX: -90,
+                    stagger: 0.1,
+                    transformOrigin: "0% 50% -50"
+                }, "-=0.5")
+                .from('.highlight', {
+                    duration: 0.8,
+                    scale: 1.5,
+                    opacity: 0,
+                    ease: "elastic.out(1, 0.3)"
+                }, "-=0.4")
+                .from('.hero-content p', {
+                    duration: 0.8,
+                    opacity: 0,
+                    y: 30,
+                    transformOrigin: "left center"
+                }, "-=0.4")
+                .from('.cta-button', {
+                    duration: 1,
+                    scale: 0,
+                    opacity: 0,
+                    rotation: -180,
+                    ease: "back.out(1.7)"
+                }, "-=0.5")
+                .from('.hero-image', {
+                    duration: 1.2,
+                    x: 100,
+                    opacity: 0,
+                    rotation: 10,
+                    scale: 0.8,
+                    ease: "back.out(1.2)"
+                }, "-=0.8");
+            }
+            
+            // Add floating animation to hero image (Your original code was good!)
+            const heroImage = document.querySelector('.hero-image');
+            if (heroImage) {
+                gsap.to('.hero-image', {
+                    y: 15,
+                    duration: 2,
+                    ease: "sine.inOut",
+                    yoyo: true,
+                    repeat: -1
+                });
+            }
+            
+            
+            // --- FIX: GSAP Scroll Animations ---
+            // We set the "from" state in the CSS (opacity: 0, transform: ...).
+            // Now, we just animate TO the default state (opacity: 1, transform: none).
+            // This prevents content from being invisible if JS fails (thanks to <noscript>)
+            // and prevents the "flash of unstyled content".
+
+            // Cards animation
+            const whyChooseSection = document.querySelector('.why-choose');
+            if (whyChooseSection) {
+                gsap.to('.card', { // FIX: Changed from .from() to .to()
+                    scrollTrigger: {
+                        trigger: '.why-choose',
+                        start: 'top 80%'
+                    },
+                    duration: 0.8,
+                    y: 0,      // FIX: Animate TO y:0
+                    opacity: 1,  // FIX: Animate TO opacity: 1
+                    stagger: 0.2,
+                    ease: 'power3.out'
+                });
+            }
+
+            // About section animation
+            const aboutSection = document.querySelector('.about');
+            if (aboutSection) {
+                gsap.to('.about-text', { // FIX: Changed from .from() to .to()
+                    scrollTrigger: {
+                        trigger: '.about',
+                        start: 'top 80%'
+                    },
+                    duration: 1,
+                    x: 0,      // FIX: Animate TO x:0
+                    opacity: 1,  // FIX: Animate TO opacity: 1
+                    ease: 'power3.out'
+                });
+
+                // Animate about stats
+                gsap.to('.stat-box', { // FIX: Changed from .from() to .to()
+                    scrollTrigger: {
+                        trigger: '.about-stats',
+                        start: 'top 80%'
+                    },
+                    duration: 0.8,
+                    scale: 1,    // FIX: Animate TO scale: 1
+                    opacity: 1,  // FIX: Animate TO opacity: 1
+                    stagger: 0.2,
+                    ease: 'back.out(1.7)'
+                });
+            }
+
+            // Animate job cards
+            const featuredJobsSection = document.querySelector('.featured-jobs');
+            if (featuredJobsSection) {
+                gsap.to('.job-card', { // FIX: Changed from .from() to .to()
+                    scrollTrigger: {
+                        trigger: '.featured-jobs',
+                        start: 'top 80%'
+                    },
+                    duration: 1,
+                    y: 0,      // FIX: Animate TO y:0
+                    opacity: 1,  // FIX: Animate TO opacity: 1
+                    stagger: 0.3,
+                    ease: 'power3.out'
+                });
+            }
+
+            // Animate team cards
+            const teamSection = document.querySelector('.team');
+            if (teamSection) {
+                gsap.to('.team-card', { // FIX: Changed from .from() to .to()
+                    scrollTrigger: {
+                        trigger: '.team',
+                        start: 'top 80%'
+                    },
+                    duration: 1,
+                    scale: 1,    // FIX: Animate TO scale: 1
+                    opacity: 1,  // FIX: Animate TO opacity: 1
+                    stagger: 0.3,
+                    ease: 'power3.out'
+                });
+            }
+
+            // Animate testimonial cards
+            const testimonialsSection = document.querySelector('.testimonials');
+            if (testimonialsSection) {
+                gsap.to('.testimonial-card', { // FIX: Changed from .from() to .to()
+                    scrollTrigger: {
+                        trigger: '.testimonials',
+                        start: 'top 80%'
+                    },
+                    duration: 1,
+                    y: 0,      // FIX: Animate TO y:0
+                    opacity: 1,  // FIX: Animate TO opacity: 1
+                    stagger: 0.3,
+                    ease: 'power3.out'
+                });
+            }
+
+            // Animate trust points
+            const trustSection = document.querySelector('.trust');
+            if (trustSection) {
+                gsap.to('.trust-point', { // FIX: Changed from .from() to .to()
+                    scrollTrigger: {
+                        trigger: '.trust',
+                        start: 'top 80%'
+                    },
+                    duration: 0.8,
+                    x: 0,      // FIX: Animate TO x:0
+                    opacity: 1,  // FIX: Animate TO opacity: 1
+                    stagger: 0.2,
+                    ease: 'power3.out'
+                });
+            }
+        });
+    </script>
+</body>
+</html>
