@@ -1,9 +1,5 @@
 {
   "version": 2,
-  "env": {
-    "GMAIL_EMAIL": "@gmail_email",
-    "GMAIL_APP_PASSWORD": "@gmail_app_password"
-  },
   "functions": {
     "api/apply.js": {
       "memory": 1024,
