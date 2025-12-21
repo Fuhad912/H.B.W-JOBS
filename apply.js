@@ -1,7 +1,7 @@
-import { IncomingForm } from 'formidable';
-import path from 'path';
-import fs from 'fs';
-import nodemailer from 'nodemailer';
+const { IncomingForm } = require('formidable');
+const path = require('path');
+const fs = require('fs');
+const nodemailer = require('nodemailer');
 
 // CORS headers
 const setCorsHeaders = (response) => {
@@ -14,6 +14,7 @@ const setCorsHeaders = (response) => {
 
 // JSON response helper
 const sendJson = (response, success, message, data = null, statusCode = 200) => {
+    response.setHeader('Content-Type', 'application/json; charset=utf-8');
     response.status(statusCode).json({
         success,
         message,
@@ -30,7 +31,7 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-export default async (request, response) => {
+module.exports = async (request, response) => {
     setCorsHeaders(response);
 
     // Handle preflight
