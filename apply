@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply Now - H-B-W Jobs</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #ffffff;
+            color: #1C1C1E;
+            overflow-x: hidden;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: #1C1C1E;
+            padding: 1.2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: #ffffff;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.12s;
+        }
+
+        .nav-links a:hover {
+            color: #6C63FF;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1100;
+        }
+
+        .menu-toggle .bar {
+            width: 25px;
+            height: 3px;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.12s ease;
+        }
+
+        .menu-toggle.active .bar:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+        .menu-toggle.active .bar:nth-child(2) {
+            opacity: 0;
+        }
+        .menu-toggle.active .bar:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
+        /* Apply Form Section */
+        .apply-section {
+            margin-top: 100px;
+            min-height: 100vh;
+            padding: 4rem 5%;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .apply-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .apply-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .apply-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #1C1C1E;
+        }
+
+        .apply-header p {
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .form-wrapper {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .form-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .form-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-body {
+            padding: 3rem;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            color: #667eea;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-number {
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #1C1C1E;
+            font-size: 0.95rem;
+        }
+
+        .form-group label .required {
+            color: #e74c3c;
+            margin-left: 3px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 0.9rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: all 0.12s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-group input[type="file"] {
+            padding: 0.6rem;
+            border: 2px dashed #667eea;
+            background: #f8f9ff;
+            cursor: pointer;
+        }
+
+        .form-group input[type="radio"],
+        .form-group input[type="checkbox"] {
+            width: auto;
+            margin-right: 0.5rem;
+        }
+
+        .radio-group,
+        .checkbox-group {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .radio-item,
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .radio-item input,
+        .checkbox-item input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .radio-item label,
+        .checkbox-item label {
+            margin: 0;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .file-info {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 0.3rem;
+        }
+
+        .submit-section {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .submit-button {
+            display: inline-block;
+            width: 100%;
+            max-width: 400px;
+            padding: 1.2rem 3rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.12s ease;
+            box-shadow: 0 10px 30px rgba(108,99,255,0.3);
+        }
+
+        .submit-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(108,99,255,0.4);
+        }
+
+        .submit-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading {
+            display: none;
+            color: #667eea;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        .error-message {
+            display: none;
+            background: #fee;
+            color: #c33;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            border-left: 4px solid #c33;
+        }
+
+        .sent-message {
+            display: none;
+            background: #efe;
+            color: #3c3;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            border-left: 4px solid #3c3;
+        }
+
+        .d-block {
+            display: block !important;
+        }
+
+        /* Benefits Sections */
+        .benefits-section {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            margin-bottom: 3rem;
+            overflow: hidden;
+        }
+
+        .benefits-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .benefits-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .benefits-content {
+            padding: 2.5rem;
+        }
+
+        .benefits-content h3 {
+            color: #667eea;
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .benefits-content h3::before {
+            content: '✓';
+            background: #667eea;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .benefits-content ul {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .benefits-content li {
+            padding: 0.8rem 0;
+            padding-left: 2rem;
+            position: relative;
+            color: #333;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .benefits-content li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .benefits-highlight {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            color: #333;
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1C1C1E;
+            color: white;
+            padding: 3rem 5%;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem 5%;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 100%;
+                height: 100vh;
+                background: #1C1C1E;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 2rem;
+                transition: right 0.3s ease;
+                z-index: 999;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links a {
+                font-size: 1.2rem;
+            }
+
+            .apply-section {
+                margin-top: 80px;
+                padding: 2rem 5%;
+            }
+
+            .apply-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .form-body {
+                padding: 1.5rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 1.2rem;
+            }
+
+            .benefits-content {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">H<span>-B-W</span> Jobs</div>
+        <ul class="nav-links">
+            <li><a href="index.html#home">Home</a></li>
+            <li><a href="index.html#home">Jobs</a></li>
+            <li><a href="index.html#home">About</a></li>
+            <li><a href="apply.html">Apply</a></li>
+        </ul>
+        <div class="menu-toggle" aria-label="Toggle navigation" role="button" tabindex="0">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </nav>
+
+    <section class="apply-section">
+        <div class="apply-container">
+            <div class="apply-header">
+                <h1>Join Our Team</h1>
+                <p>Complete the form below to apply for a position at H-B-W Jobs</p>
+            </div>
+
+            <!-- Requirements Section -->
+            <div class="benefits-section">
+                <div class="benefits-header">
+                    <h2>✓ REQUIREMENTS</h2>
+                </div>
+                <div class="benefits-content">
+                    <h3>Applicant Must:</h3>
+                    <ul>
+                        <li>Be 18 years and above</li>
+                        <li>Have access to internet</li>
+                        <li>Be United States Citizen or Qualified Migrant</li>
+                        <li>Be able to spend 2-4 hours daily working with us</li>
+                    </ul>
+                    <div class="benefits-highlight">
+                        📌 No Additional Experience Required! As long as you can follow simple steps, you're ready to succeed with us.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Benefits Section -->
+            <div class="benefits-section">
+                <div class="benefits-header">
+                    <h2>💰 BENEFITS AND REWARDS</h2>
+                </div>
+                <div class="benefits-content">
+                    <h3>Why Join H-B-W Jobs?</h3>
+                    <ul>
+                        <li><strong>Competitive Pay:</strong> We pay around $25-$50 per hour</li>
+                        <li><strong>Monthly Bonus:</strong> Every active worker receives monthly bonuses</li>
+                        <li><strong>Free Training:</strong> Complete training and professional mentorship included</li>
+                        <li><strong>Free Gadgets:</strong> Receive 1 Free Phone & 1 Free Laptop as a worker</li>
+                        <li><strong>Exclusive Vacation:</strong> 5 most active workers get a free expense-paid vacation to any country of choice!</li>
+                    </ul>
+                    <div class="benefits-highlight">
+                        🎁 These are just the beginning! Join thousands of successful workers earning excellent income from home with H-B-W Jobs.
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-wrapper">
+                <div class="form-header">
+                    <h2>Application Form</h2>
+                    <p>Please fill out all required fields (*)</p>
+                </div>
+
+                <div class="form-body">
+                    <form id="applicationForm" method="POST" enctype="multipart/form-data">
+                        
+                        <!-- Section 1: Applicant Information -->
+                        <div class="section">
+                            <div class="section-title">
+                                <span class="section-number">1</span>
+                                Applicant Information
+                            </div>
+                            <p style="color: #666; margin-bottom: 1.5rem; font-size: 0.95rem;">Please provide your complete personal details. This helps us verify your identity and contact you with job opportunities.</p>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="firstName">First Name <span class="required">*</span></label>
+                                    <input type="text" id="firstName" name="firstName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="middleName">Middle Name</label>
+                                    <input type="text" id="middleName" name="middleName">
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastName">Last Name <span class="required">*</span></label>
+                                    <input type="text" id="lastName" name="lastName" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="dateOfBirth">Date of Birth <span class="required">*</span></label>
+                                    <input type="date" id="dateOfBirth" name="dateOfBirth" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="gender">Gender <span class="required">*</span></label>
+                                    <select id="gender" name="gender" required>
+                                        <option value="">-- Select Gender --</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Phone Number <span class="required">*</span></label>
+                                    <input type="tel" id="phone" name="phone" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group" style="grid-column: 1 / -1;">
+                                    <label for="address">Home Address <span class="required">*</span></label>
+                                    <textarea id="address" name="address" required></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="state">State <span class="required">*</span></label>
+                                    <input type="text" id="state" name="state" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="city">City <span class="required">*</span></label>
+                                    <input type="text" id="city" name="city" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="country">Country <span class="required">*</span></label>
+                                    <select id="country" name="country" required>
+                                        <option value="United States" selected>United States</option>
+                                        <option value="Canada">Canada</option>
+                                        <option value="United Kingdom">United Kingdom</option>
+                                        <option value="Australia">Australia</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="zipCode">ZIP Code <span class="required">*</span></label>
+                                    <input type="text" id="zipCode" name="zipCode" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section 2: Employment Information -->
+                        <div class="section">
+                            <div class="section-title">
+                                <span class="section-number">2</span>
+                                Employment Information
+                            </div>
+                            <p style="color: #666; margin-bottom: 1.5rem; font-size: 0.95rem;">Tell us about your work preferences and any relevant experience. Your resume is optional but helps us match you with the best opportunities.</p>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="position">Preferred Work Position <span class="required">*</span></label>
+                                    <input type="text" id="position" name="position" placeholder="e.g., Customer Support Agent" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Work Schedule Choice <span class="required">*</span></label>
+                                    <div class="radio-group">
+                                        <div class="radio-item">
+                                            <input type="radio" id="fullTime" name="schedule" value="Full Time" required>
+                                            <label for="fullTime">Full Time</label>
+                                        </div>
+                                        <div class="radio-item">
+                                            <input type="radio" id="partTime" name="schedule" value="Part Time" required>
+                                            <label for="partTime">Part Time</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="resume">Resume Upload (PDF/DOC/DOCX)</label>
+                                    <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx">
+                                    <div class="file-info">Optional - Upload your resume</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section 3: Last Employer Information -->
+                        <div class="section">
+                            <div class="section-title">
+                                <span class="section-number">3</span>
+                                Last Employer Information
+                            </div>
+                            <p style="color: #666; margin-bottom: 1.5rem; font-size: 0.95rem;">Share your work history. This helps us understand your experience level and match you with suitable positions.</p>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="lastEmployer">Last Employer Name <span class="required">*</span></label>
+                                    <input type="text" id="lastEmployer" name="lastEmployer" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastPosition">Last Employee Position <span class="required">*</span></label>
+                                    <input type="text" id="lastPosition" name="lastPosition" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="workExperience">Work Experience (Years) <span class="required">*</span></label>
+                                    <input type="number" id="workExperience" name="workExperience" min="0" max="70" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section 4: Demographics -->
+                        <div class="section">
+                            <div class="section-title">
+                                <span class="section-number">4</span>
+                                Demographics
+                            </div>
+                            <p style="color: #666; margin-bottom: 1.5rem; font-size: 0.95rem;">Answer these demographic questions to ensure you meet our basic requirements and work schedule compatibility.</p>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Are you a Citizen of the United States? <span class="required">*</span></label>
+                                    <div class="radio-group">
+                                        <div class="radio-item">
+                                            <input type="radio" id="citizenYes" name="citizenship" value="Yes" required>
+                                            <label for="citizenYes">Yes</label>
+                                        </div>
+                                        <div class="radio-item">
+                                            <input type="radio" id="citizenNo" name="citizenship" value="No" required>
+                                            <label for="citizenNo">No</label>
+                                        </div>
+                                        <div class="radio-item">
+                                            <input type="radio" id="citizenForeign" name="citizenship" value="Qualify Foreigner" required>
+                                            <label for="citizenForeign">Qualify Foreigner</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Can you work 4–6 hours daily (Monday–Friday)? <span class="required">*</span></label>
+                                    <div class="radio-group">
+                                        <div class="radio-item">
+                                            <input type="radio" id="hoursYes" name="workHours" value="Yes" required>
+                                            <label for="hoursYes">Yes</label>
+                                        </div>
+                                        <div class="radio-item">
+                                            <input type="radio" id="hoursNo" name="workHours" value="No" required>
+                                            <label for="hoursNo">No</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="hearAbout">How Did You Hear About Us? <span class="required">*</span></label>
+                                    <input type="text" id="hearAbout" name="hearAbout" placeholder="e.g., Social Media, Friend, Job Board" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section 5: ID Verification -->
+                        <div class="section">
+                            <div class="section-title">
+                                <span class="section-number">5</span>
+                                ID Verification
+                            </div>
+                            <p style="color: #666; margin-bottom: 1.5rem; font-size: 0.95rem;">For security purposes, we need to verify your identity. Your information is encrypted and kept 100% confidential.</p>
+
+                            <div class="form-row">
+                                <div class="form-group" style="grid-column: 1 / -1;">
+                                    <label for="idFrontBack">Driver's License or ID Upload (Front & Back) <span class="required">*</span></label>
+                                    <input type="file" id="idFrontBack" name="idFrontBack" accept="image/*,.pdf" required>
+                                    <div class="file-info">Required - Upload both front and back of ID (image or PDF)</div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="ssn">Social Security Number <span class="required">*</span></label>
+                                    <input type="password" id="ssn" name="ssn" placeholder="XXX-XX-XXXX" required>
+                                    <div class="file-info">Your SSN is encrypted and secure</div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group" style="grid-column: 1 / -1;">
+                                    <label for="selfie">Selfie Upload <span class="required">*</span></label>
+                                    <input type="file" id="selfie" name="selfie" accept="image/*" required>
+                                    <div class="file-info">Required - Clear selfie for verification</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Submit Section -->
+                        <div class="submit-section">
+                            <button type="submit" class="submit-button">Submit Application</button>
+                            <div class="loading">Processing your application...</div>
+                            <div class="error-message"></div>
+                            <div class="sent-message">✓ Application submitted successfully! We'll review it shortly.</div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 H-B-W Jobs. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hamburger menu toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+
+            if (menuToggle && navLinks) {
+                menuToggle.addEventListener('click', function() {
+                    menuToggle.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                });
+
+                // Close menu when a link is clicked
+                navLinks.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', function() {
+                        menuToggle.classList.remove('active');
+                        navLinks.classList.remove('active');
+                    });
+                });
+            }
+
+            // Application form handler
+            const form = document.getElementById('applicationForm');
+            
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    const loadingEl = form.querySelector('.loading');
+                    const errorEl = form.querySelector('.error-message');
+                    const successEl = form.querySelector('.sent-message');
+                    const submitBtn = form.querySelector('.submit-button');
+
+                    // Hide previous messages
+                    loadingEl.classList.remove('d-block');
+                    errorEl.classList.remove('d-block');
+                    successEl.classList.remove('d-block');
+
+                    // Show loading
+                    loadingEl.classList.add('d-block');
+                    submitBtn.disabled = true;
+
+                    const formData = new FormData(form);
+                    
+                    // Use Replit API endpoint for application submissions
+                    const API_URL = 'https://178840c8-8238-4258-bc3a-02d843bffd32-00-1smz4xh0n22rk.picard.replit.dev/api/application.php';
+
+                    fetch(API_URL, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {'X-Requested-With': 'XMLHttpRequest'}
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        loadingEl.classList.remove('d-block');
+                        submitBtn.disabled = false;
+                        
+                        if (data.success === true) {
+                            successEl.textContent = '✅ ' + data.message;
+                            successEl.classList.add('d-block');
+                            form.reset();
+                        } else {
+                            throw new Error(data.message || 'Application submission failed');
+                        }
+                    })
+                    .catch(error => {
+                        loadingEl.classList.remove('d-block');
+                        errorEl.textContent = '❌ Error: ' + (error.message || 'Something went wrong');
+                        errorEl.classList.add('d-block');
+                        submitBtn.disabled = false;
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
